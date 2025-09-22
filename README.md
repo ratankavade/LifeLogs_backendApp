@@ -5,6 +5,6 @@
 - create routes folder and routes files
 - create controllers and define all api's
 - install mongoose
-- connect to mongoose DB
+- connect to mongoose DB (MongoDB Atlas - ratankavade@gmail.com)
 - create model for POST api's
 - 

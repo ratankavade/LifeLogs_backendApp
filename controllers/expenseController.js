@@ -28,21 +28,42 @@ const createExpense = expressAsyncHandler(async (req, res)=>{
 //@Route - GET /api/expense/:id
 //@Access - private
 const getExpense = expressAsyncHandler(async (req, res)=>{
-    await res.status(200).send("Get expense by id")
+    const expense = await Expense.findById(req.params.id);
+    if(!expense){
+        res.status(400);
+        throw new Error("Expense not found");
+    }
+    await res.status(200).send(expense)
 })
 
 //@Desc - Update expense
 //@Route - PUT /api/expense/:id
 //@Access - private
 const updateExpense = expressAsyncHandler(async (req, res)=>{
-    await res.status(200).send("Update expense")
+    const expense = await Expense.findById(req.params.id);
+    if(!expense){
+        res.status(400);
+        throw new Error("Expense not found");
+    }
+
+    const updatedExpense = await Expense.findByIdAndUpdate(req.params.id, req.body, {new: true})
+
+    await res.status(200).json(updatedExpense)
 })
 
 //@Desc - Delete expense
 //@Route - DELETE /api/expense/:id
 //@Access - private
 const deleteExpense = expressAsyncHandler(async (req, res)=>{
-    await res.status(200).send("Delete expense")
+    const expense = await Expense.findById(req.params.id);
+    if(!expense){
+        res.status(400);
+        throw new Error("Expense not found");
+    }
+
+    const deletedExpense = await Expense.findByIdAndDelete(req.params.id);
+
+    await res.status(200).send(deletedExpense)
 })
 
 module.exports = {getAllExpense, createExpense, getExpense, updateExpense, deleteExpense}
