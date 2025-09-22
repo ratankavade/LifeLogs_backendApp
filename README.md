@@ -1,0 +1,10 @@
+- create folder
+- install express
+- install nodemon
+- create server.js
+- create routes folder and routes files
+- create controllers and define all api's
+- install mongoose
+- connect to mongoose DB
+- create model for POST api's
+- 
