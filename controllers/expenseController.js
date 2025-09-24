@@ -5,7 +5,7 @@ const Expense = require("../models/expenseModel")
 //@Route - GET /api/expense
 //@Access - private
 const getAllExpense = expressAsyncHandler(async (req, res)=>{
-    const expense = await Expense.find()
+    const expense = await Expense.find({user_id: req.user.id})
     await res.status(200).json(expense)
 })
 
@@ -14,14 +14,16 @@ const getAllExpense = expressAsyncHandler(async (req, res)=>{
 //@Access - private
 const createExpense = expressAsyncHandler(async (req, res)=>{
     const {name, type, amount} = req.body;
+
     if(!name || !type || !amount){
         res.status(400)
         throw new Error("All fields are mandatory!");
     }
     const expense = Expense.create({
-        name, type, amount
+        name, type, amount, user_id: req.user.id
     })
-    await res.status(200).json("New expense created", expense)
+
+    await res.status(200).json(expense)
 })
 
 //@Desc - Get expense by passing id
@@ -32,6 +34,11 @@ const getExpense = expressAsyncHandler(async (req, res)=>{
     if(!expense){
         res.status(400);
         throw new Error("Expense not found");
+    }
+    if(expense.user_id.toString() !== req.user.id){
+        res.status(403);
+        throw new Error("Can not get details of other users expense");
+        
     }
     await res.status(200).send(expense)
 })
@@ -45,7 +52,11 @@ const updateExpense = expressAsyncHandler(async (req, res)=>{
         res.status(400);
         throw new Error("Expense not found");
     }
-
+    if(expense.user_id.toString() !== req.user.id){
+        res.status(403);
+        throw new Error("Can not update details of other users expense");
+        
+    }
     const updatedExpense = await Expense.findByIdAndUpdate(req.params.id, req.body, {new: true})
 
     await res.status(200).json(updatedExpense)
@@ -60,7 +71,11 @@ const deleteExpense = expressAsyncHandler(async (req, res)=>{
         res.status(400);
         throw new Error("Expense not found");
     }
-
+    if(expense.user_id.toString() !== req.user.id){
+        res.status(403);
+        throw new Error("Can not delete details of other users expense");
+        
+    }
     const deletedExpense = await Expense.findByIdAndDelete(req.params.id);
 
     await res.status(200).send(deletedExpense)
