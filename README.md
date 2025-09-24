@@ -7,4 +7,11 @@
 - install mongoose
 - connect to mongoose DB (MongoDB Atlas - ratankavade@gmail.com)
 - create model for POST api's
-- 
+- create GET, PUT, DELETE api's
+- create user modal
+- install bcrypt for password encryption
+- create jwt token
+- store jwt token in cookies
+- verify jwt token for authorization
+- create authMiddelware for authorization
+- update the api logic accordingly
