@@ -15,3 +15,6 @@
 - verify jwt token for authorization
 - create authMiddelware for authorization
 - update the api logic accordingly
+- install cors using npm install cors
+- add middleware in server.js file for cors with origin and credential:true
+- update userModel with new fields

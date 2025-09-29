@@ -12,7 +12,15 @@ const userModel = mongoose.Schema({
     password: {
         type: String,
         required: [true, "Please provide password"]
+    },
+    photoUrl: {
+        type: String
+    },
+    birthDate: {
+        type: String
     }
+}, {
+  timestamps: true // <-- This automatically adds createdAt and updatedAt
 })
 
 module.exports = mongoose.model("User", userModel);
