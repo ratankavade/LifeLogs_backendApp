@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 //@route - POST - /register
 //@access - public
 const userRegistration = expressAsyncHandler(async(req, res)=>{
-    const {userName, email, password, photoUrl, birthDate} = req.body;
+    const {userName, email, password, photoUrl} = req.body;
     if(!userName || !email || !password){
         res.status(400);
         throw new Error("All fields are mandatory..");
@@ -23,7 +23,7 @@ const userRegistration = expressAsyncHandler(async(req, res)=>{
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
-        userName, email, password: hashedPassword, photoUrl, birthDate
+        userName, email, password: hashedPassword, photoUrl
     })
 
     if(user){

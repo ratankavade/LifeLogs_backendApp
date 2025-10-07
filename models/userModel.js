@@ -15,9 +15,6 @@ const userModel = mongoose.Schema({
     },
     photoUrl: {
         type: String
-    },
-    birthDate: {
-        type: String
     }
 }, {
   timestamps: true // <-- This automatically adds createdAt and updatedAt
