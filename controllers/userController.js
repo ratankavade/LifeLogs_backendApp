@@ -66,7 +66,7 @@ const userLogin = expressAsyncHandler(async(req, res)=>{
         },
         process.env.SECREAT_TOKEN,
         {
-            expiresIn: '10m'
+            expiresIn: '1h'
         })
         res.cookie("token", accessToken);
         await res.status(200).json(registeredUser);
@@ -83,7 +83,7 @@ const userLogin = expressAsyncHandler(async(req, res)=>{
 const userProfile = expressAsyncHandler(async(req, res)=> {
     const user = req.user;
     // const user = await User.findById(req.params.id)
-    console.log("user", user);
+    // console.log("user", user);
     await res.status(200).json(user)
 })
 

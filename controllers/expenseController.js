@@ -81,4 +81,33 @@ const deleteExpense = expressAsyncHandler(async (req, res)=>{
     await res.status(200).send(deletedExpense)
 })
 
-module.exports = {getAllExpense, createExpense, getExpense, updateExpense, deleteExpense}
+//@Desc - Get expense by passing user_id
+//@Route - GET /api/expense/user/:user_id
+//@Access - private
+const getExpenseByUserId = expressAsyncHandler(async (req, res)=>{
+    const userId = req.user._id;
+    if(!userId){
+        res.status(400);
+        throw new Error("Expense with user id not found");
+    }
+
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const expense = await Expense.find({
+        "user_id": userId,
+        "createdAt": { $gte: startOfDay, $lte: endOfDay}
+    }).sort({"createdAt": -1});
+
+    if(!expense || expense.length === 0){
+        res.status(200).json([]);
+        return;
+    }
+    
+    await res.status(200).send(expense)
+})
+
+module.exports = {getAllExpense, createExpense, getExpense, updateExpense, deleteExpense, getExpenseByUserId}
