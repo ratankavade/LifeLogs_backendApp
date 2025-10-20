@@ -77,6 +77,16 @@ const userLogin = expressAsyncHandler(async(req, res)=>{
     }
 })
 
+//@desc - User login
+//@route - POST - /login
+//@access - public
+const userLogout = expressAsyncHandler(async(req, res)=> {
+    res.cookie("token", null, {
+        expires: new Date(Date.now()) 
+    });
+    res.send("Logout successfull")
+})
+
 //@desc - profile information
 //@route - GET - /profile
 //@access - private
@@ -97,5 +107,5 @@ const getAllUser = expressAsyncHandler(async(req, res)=> {
 
 
 module.exports = {
-    userRegistration, userLogin, userProfile, getAllUser
+    userRegistration, userLogin, userProfile, getAllUser, userLogout
 }
