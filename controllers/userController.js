@@ -10,14 +10,14 @@ const jwt = require("jsonwebtoken");
 const userRegistration = expressAsyncHandler(async(req, res)=>{
     const {userName, email, password, photoUrl} = req.body;
     if(!userName || !email || !password){
-        res.status(400);
-        throw new Error("All fields are mandatory..");
+        res.status(400).json({message: "All fields are required."});
+        // throw new Error("All fields are mandatory..");
     }
     const alreadyRegistered = await User.findOne({email});
 
     if(alreadyRegistered){
-        res.status(400);
-        throw new Error("User already registered!");
+        res.status(400).json({message: "User is already registered."});
+        // throw new Error("User already registered!");
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -29,8 +29,8 @@ const userRegistration = expressAsyncHandler(async(req, res)=>{
     if(user){
         await res.status(200).send("User register successfully!", user);
     }else{
-        res.status(400);
-        throw new Error("Invalid data");
+        res.status(400).json({message: "Invalid data"});
+        // throw new Error("Invalid data");
     }
     
 });
@@ -41,19 +41,19 @@ const userRegistration = expressAsyncHandler(async(req, res)=>{
 const userLogin = expressAsyncHandler(async(req, res)=>{
     const {email, password} = req.body;
     if(!email || !password){
-        res.status(400);
-        throw new Error("All fields are mandatory!");
+        res.status(400).json({message: "All fields are required."});
+        // throw new Error("All fields are mandatory");
     }
     const registeredUser = await User.findOne({email});
 
     if(!registeredUser){
-        res.status(400);
-        throw new Error("Please register before login");
+        res.status(400).json({message: "Please register before login."});
+        // throw new Error("Please register before login");
     }
     const comparePassword = await bcrypt.compare(password, registeredUser.password);
     if(!comparePassword){
-        res.status(400);
-        throw new Error("Please enter valid password");
+        res.status(400).json({message : "Enter valid password."});
+        // throw new Error("Please enter valid password");
     }
 
     if(registeredUser && comparePassword){
