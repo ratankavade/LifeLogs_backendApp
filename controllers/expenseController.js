@@ -13,14 +13,18 @@ const getAllExpense = expressAsyncHandler(async (req, res)=>{
 //@Route - POST /api/expense
 //@Access - private
 const createExpense = expressAsyncHandler(async (req, res)=>{
-    const {name, type, amount} = req.body;
+    const {name, type, amount, createdAt} = req.body;
 
     if(!name || !type || !amount){
         res.status(400)
         throw new Error("All fields are mandatory!");
     }
     const expense = Expense.create({
-        name, type, amount, user_id: req.user.id
+        name, 
+        type, 
+        amount, 
+        user_id: req.user.id,
+        createdAt: createdAt || new Date()
     })
 
     await res.status(200).json(expense)

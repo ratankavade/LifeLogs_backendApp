@@ -66,7 +66,7 @@ const userLogin = expressAsyncHandler(async(req, res)=>{
         },
         process.env.SECREAT_TOKEN,
         {
-            expiresIn: '1h'
+            expiresIn: '10h'
         })
         res.cookie("token", accessToken);
         await res.status(200).json(registeredUser);

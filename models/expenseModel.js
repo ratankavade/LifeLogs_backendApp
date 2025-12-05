@@ -17,9 +17,13 @@ const expenseModel = mongoose.Schema({
     amount:{
         type: Number,
         required: [true, "Please add amount"]
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 }, {
-  timestamps: true // <-- This automatically adds createdAt and updatedAt
+    timestamps: true
 })
 
 module.exports = mongoose.model("Expense", expenseModel);
