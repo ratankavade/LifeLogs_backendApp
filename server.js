@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
 app.use("/", require("./routes/userRoute"));
 app.use("/api/expense", require("./routes/expenseRoute"));
+app.use("/api/diary", require("./routes/diaryRoute"));
 
 
 
