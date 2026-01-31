@@ -77,8 +77,8 @@ const userLogin = expressAsyncHandler(async(req, res)=>{
     }
 })
 
-//@desc - User login
-//@route - POST - /login
+//@desc - User logout
+//@route - POST - /logout
 //@access - public
 const userLogout = expressAsyncHandler(async(req, res)=> {
     res.cookie("token", null, {
